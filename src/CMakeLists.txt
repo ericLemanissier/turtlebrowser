@@ -45,9 +45,13 @@ endif ()
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Qml Quick Svg WebEngine Widgets Xml Test LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Qml Quick Svg WebEngine Widgets Xml Test LinguistTools REQUIRED)
 
-include_directories(${Qt5Widgets_INCLUDE_DIRS} ${QtQml_INCLUDE_DIRS})
-
-add_definitions(${Qt5Widgets_DEFINITIONS} ${QtQml_DEFINITIONS} ${${Qt5Quick_DEFINITIONS}})
+if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    include_directories(${Qt6Widgets_INCLUDE_DIRS} ${QtQml_INCLUDE_DIRS})
+    add_definitions(${Qt6Widgets_DEFINITIONS} ${QtQml_DEFINITIONS} ${${Qt6Quick_DEFINITIONS}})
+else()
+    include_directories(${Qt5Widgets_INCLUDE_DIRS} ${QtQml_INCLUDE_DIRS})
+    add_definitions(${Qt5Widgets_DEFINITIONS} ${QtQml_DEFINITIONS} ${${Qt5Quick_DEFINITIONS}})
+endif ()
 
 qt_add_resources(QT_RESOURCES resources/resources.qrc ${LICENSE_QRC})
 
