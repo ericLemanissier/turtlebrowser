@@ -42,15 +42,14 @@ else ()
     message(STATUS "Conan package manager is switched off.")
 endif ()
 
-find_package(Qt5 COMPONENTS Core Gui Qml Quick Svg WebEngine Widgets Xml REQUIRED)
-find_package(Qt5Test REQUIRED)
-find_package(Qt5 COMPONENTS LinguistTools REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Qml Quick Svg WebEngine Widgets Xml Test LinguistTools REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Qml Quick Svg WebEngine Widgets Xml Test LinguistTools REQUIRED)
 
 include_directories(${Qt5Widgets_INCLUDE_DIRS} ${QtQml_INCLUDE_DIRS})
 
 add_definitions(${Qt5Widgets_DEFINITIONS} ${QtQml_DEFINITIONS} ${${Qt5Quick_DEFINITIONS}})
 
-qt5_add_resources(QT_RESOURCES resources/resources.qrc ${LICENSE_QRC})
+qt_add_resources(QT_RESOURCES resources/resources.qrc ${LICENSE_QRC})
 
 set(tsFiles
     ${PROJECT_NAME}_de_AT.ts
@@ -59,10 +58,10 @@ set(tsFiles
 
 if (ENABLE_TS_RESCAN)
     # Need to generate the ts files using lupdate
-    qt5_create_translation(qmFiles ${CMAKE_CURRENT_LIST_DIR} ${tsFiles})
+    qt_create_translation(qmFiles ${CMAKE_CURRENT_LIST_DIR} ${tsFiles})
 else ()
     # Need to the ts files to qm files using lrelease
-    qt5_add_translation(qmFiles ${tsFiles})
+    qt_add_translation(qmFiles ${tsFiles})
 endif ()
 
 file(GLOB_RECURSE HEADERS *.h)
@@ -74,14 +73,14 @@ source_group("Source Files" FILES ${SOURCES})
 add_executable(${PROJECT_NAME} MACOSX_BUNDLE WIN32 ${HEADERS} ${SOURCES} ${QT_RESOURCES} ${qmFiles})
 
 target_link_libraries(${PROJECT_NAME}
-                      Qt5::Core
-                      Qt5::Gui
-                      Qt5::Qml
-                      Qt5::Quick
-                      Qt5::Svg
-                      Qt5::WebEngine
-                      Qt5::Widgets
-                      Qt5::Xml)
+                      Qt::Core
+                      Qt::Gui
+                      Qt::Qml
+                      Qt::Quick
+                      Qt::Svg
+                      Qt::WebEngine
+                      Qt::Widgets
+                      Qt::Xml)
 
 set(qmlFiles ${CMAKE_SOURCE_DIR}/src/resources/qml/)
 
@@ -105,7 +104,7 @@ install(TARGETS ${PROJECT_NAME}
         BUNDLE DESTINATION .)
 
 # Get the Qt bin directory
-get_target_property(mocExe Qt5::moc IMPORTED_LOCATION)
+get_target_property(mocExe Qt::moc IMPORTED_LOCATION)
 get_filename_component(qtBinDir "${mocExe}" DIRECTORY)
 get_filename_component(qtBaseDir "${qtBinDir}" DIRECTORY)
 
