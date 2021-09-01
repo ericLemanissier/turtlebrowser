@@ -28,6 +28,8 @@ if (USE_CONAN)
     #conan_add_remote(NAME bincrafters INDEX 1 URL https://api.bintray.com/conan/bincrafters/public-conan)
     conan_add_remote(NAME jfrog INDEX 1 URL https://turtlebrowser.jfrog.io/artifactory/api/conan/conan)
 
+    conan_cmake_autodetect(settings)
+
     if (UPDATE_CONAN)
         conan_cmake_install(PATH_OR_REFERENCE ${CMAKE_CURRENT_SOURCE_DIR}/../conanfile.py UPDATE BUILD outdated SETTINGS ${settings})
     else ()
