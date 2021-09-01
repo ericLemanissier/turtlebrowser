@@ -45,14 +45,6 @@ endif ()
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Qml Quick Svg WebEngine Widgets Xml Test LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Qml Quick Svg WebEngine Widgets Xml Test LinguistTools REQUIRED)
 
-if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    include_directories(${Qt6Widgets_INCLUDE_DIRS} ${QtQml_INCLUDE_DIRS})
-    add_definitions(${Qt6Widgets_DEFINITIONS} ${QtQml_DEFINITIONS} ${${Qt6Quick_DEFINITIONS}})
-else()
-    include_directories(${Qt5Widgets_INCLUDE_DIRS} ${QtQml_INCLUDE_DIRS})
-    add_definitions(${Qt5Widgets_DEFINITIONS} ${QtQml_DEFINITIONS} ${${Qt5Quick_DEFINITIONS}})
-endif ()
-
 qt_add_resources(QT_RESOURCES resources/resources.qrc ${LICENSE_QRC})
 
 set(tsFiles
@@ -77,14 +69,14 @@ source_group("Source Files" FILES ${SOURCES})
 add_executable(${PROJECT_NAME} MACOSX_BUNDLE WIN32 ${HEADERS} ${SOURCES} ${QT_RESOURCES} ${qmFiles})
 
 target_link_libraries(${PROJECT_NAME}
-                      Qt::Core
-                      Qt::Gui
-                      Qt::Qml
-                      Qt::Quick
-                      Qt::Svg
-                      Qt::WebEngine
-                      Qt::Widgets
-                      Qt::Xml)
+                      Qt${QT_VERSION_MAJOR}::Core
+                      Qt${QT_VERSION_MAJOR}::Gui
+                      Qt${QT_VERSION_MAJOR}::Qml
+                      Qt${QT_VERSION_MAJOR}::Quick
+                      Qt${QT_VERSION_MAJOR}::Svg
+                      Qt${QT_VERSION_MAJOR}::WebEngine
+                      Qt${QT_VERSION_MAJOR}::Widgets
+                      Qt${QT_VERSION_MAJOR}::Xml)
 
 set(qmlFiles ${CMAKE_SOURCE_DIR}/src/resources/qml/)
 
@@ -108,7 +100,7 @@ install(TARGETS ${PROJECT_NAME}
         BUNDLE DESTINATION .)
 
 # Get the Qt bin directory
-get_target_property(mocExe Qt::moc IMPORTED_LOCATION)
+get_target_property(mocExe Qt${QT_VERSION_MAJOR}::moc IMPORTED_LOCATION)
 get_filename_component(qtBinDir "${mocExe}" DIRECTORY)
 get_filename_component(qtBaseDir "${qtBinDir}" DIRECTORY)
 
