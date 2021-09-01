@@ -20,7 +20,7 @@ if (USE_CONAN)
     # Download automatically, you can also just copy the conan.cmake file
     if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
         message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-        file(DOWNLOAD "https://github.com/conan-io/cmake-conan/raw/v0.15/conan.cmake"
+        file(DOWNLOAD "https://github.com/conan-io/cmake-conan/raw/v0.16.1/conan.cmake"
             "${CMAKE_BINARY_DIR}/conan.cmake")
     endif ()
 
@@ -29,10 +29,12 @@ if (USE_CONAN)
     conan_add_remote(NAME jfrog INDEX 1 URL https://turtlebrowser.jfrog.io/artifactory/api/conan/conan)
 
     if (UPDATE_CONAN)
-        conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS UPDATE BUILD outdated)
+        conan_cmake_install(PATH_OR_REFERENCE ${CMAKE_CURRENT_SOURCE_DIR}/../conanfile.py UPDATE BUILD outdated SETTINGS ${settings})
     else ()
-        conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS BUILD missing)
+        conan_cmake_install(PATH_OR_REFERENCE ${CMAKE_CURRENT_SOURCE_DIR}/../conanfile.py BUILD missing SETTINGS ${settings})
     endif ()
+
+    list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR}/src/)
 
     # For running locally in CLion
     if (NOT DEFINED ENV{CMAKE_PREFIX_PATH})
