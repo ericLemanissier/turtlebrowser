@@ -31,7 +31,7 @@ if (USE_CONAN)
     conan_cmake_autodetect(settings)
 
     if (UPDATE_CONAN)
-        conan_cmake_install(PATH_OR_REFERENCE ${CMAKE_CURRENT_SOURCE_DIR}/../conanfile.py UPDATE BUILD outdated SETTINGS ${settings})
+        conan_cmake_install(PATH_OR_REFERENCE ${CMAKE_CURRENT_SOURCE_DIR}/../conanfile.py UPDATE BUILD outdated SETTINGS ${settings} SETTINGS compiler.cppstd=17)
     else ()
         conan_cmake_install(PATH_OR_REFERENCE ${CMAKE_CURRENT_SOURCE_DIR}/../conanfile.py BUILD missing SETTINGS ${settings})
     endif ()
