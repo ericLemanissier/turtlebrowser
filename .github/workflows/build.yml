@@ -55,6 +55,9 @@ jobs:
 
     - name: Conan version
       run: echo "${{ steps.conan.outputs.version }}"
+    
+    - name: remove conan's installation registry
+      run: conan remove --system-reqs '*'
 
     - name: Make build directory
       run: mkdir build
@@ -117,6 +120,9 @@ jobs:
       run: |
         source ${{ github.workspace }}/build/src/activate_run.sh
         DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH DYLD_FRAMEWORK_PATH=$DYLD_FRAMEWORK_PATH cmake --build . --config Release --target install
+    
+    - name: remove conan's installation registry
+      run: conan remove --system-reqs '*'
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
