@@ -96,6 +96,10 @@ jobs:
 #      if: startsWith(matrix.config.os, 'ubuntu')
 #      run: echo "/home/runner/.local/bin" >> $GITHUB_PATH
 
+    - name: Add Linux dependencies
+      if: startsWith(matrix.config.os, 'ubuntu')
+      run: sudo apt-get install libnss3-dev
+
 #    - name: Install patched conan-qt
 #      run: |
 #        git clone https://github.com/patricia-gallardo/conan-qt.git
