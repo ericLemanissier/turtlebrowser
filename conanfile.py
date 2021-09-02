@@ -9,6 +9,7 @@ class ConanDependencies(ConanFile):
     generators = "qt", "cmake", "cmake_find_package_multi", "cmake_find_package", "pkg_config", "qmake" if not platform_qt else "cmake"
     
     default_options = {
+        "qt:shared": True,
         "qt:qtlocation": True,
         "qt:qtquickcontrols": True,
         "qt:qtquickcontrols2": True,
@@ -17,7 +18,7 @@ class ConanDependencies(ConanFile):
         "qt:qtwebchannel": True,
         "qt:qtwebengine": True,
         "qt:qtwebview": True,
-        "qt:with_fontconfig": True,
+        #"qt:with_fontconfig": True,
         "qt:with_freetype": True,
         "qt:with_glib": False,
         "qt:config": "-no-feature-geoservices_mapboxgl",
@@ -31,7 +32,7 @@ class ConanDependencies(ConanFile):
             self.output.info("CMAKE_PREFIX_PATH not set")
             self.output.info("To use the Qt from your system, set the CMAKE_PREFIX_PATH env var")
             self.output.info("Trying to get Qt from Conan")
-            self.requires("qt/5.15.2@turtlebrowser/stable")
+            self.requires("qt/5.15.2")
         else:
             self.output.info("Getting Qt from the system. CMAKE_PREFIX_PATH = " + platform_qt)
 
