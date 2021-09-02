@@ -98,7 +98,7 @@ jobs:
 
     - name: Add Linux dependencies
       if: startsWith(matrix.config.os, 'ubuntu')
-      run: sudo apt-get install libnss3-dev
+      run: sudo apt-get install libnss3-dev libdbus-1-dev
 
 #    - name: Install patched conan-qt
 #      run: |
