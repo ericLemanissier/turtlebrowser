@@ -51,7 +51,7 @@ jobs:
 
     # Check if GitHub Cache has it, because that's free
     - name: Using the builtin GitHub Cache Action for .conan
-      if: startsWith(matrix.config.os, 'windows') == false
+      if: false && (startsWith(matrix.config.os, 'windows') == false)
       id: github-cache-conan
       uses: actions/cache@v1
       env:
@@ -62,7 +62,7 @@ jobs:
 
     # If GitHub Cache doesn't have it, get from Conan Cache (has git lfs cost)
     - name: Cache Conan modules
-      if: steps.github-cache-conan.outputs.cache-hit != 'true'
+      if: false && steps.github-cache-conan.outputs.cache-hit != 'true'
       id: cache-conan
       uses: turtlebrowser/conan-cache@v1.3
       with:
