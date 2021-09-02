@@ -11,15 +11,39 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04, macos-10.15, windows-2019] # ubuntu-18.04, macos-10.15, windows-2019, ubuntu-20.04
+        config:
+          - {
+            name: "Ubuntu 18.04",
+            os: ubuntu-18.04,
+            work_dir: "/home/runner/work/work_dir",
+#            cache_dir: "/home/runner/work/work_dir"
+          }
+          - {
+            name: "Ubuntu 20.04",
+            os: ubuntu-20.04,
+            work_dir: "/home/runner/work/work_dir",
+#            cache_dir: "/home/runner/work/work_dir"
+          }
+          - {
+            name: "Windows 2019",
+            os: windows-2019,
+            work_dir: "/c/Code",
+#            cache_dir: "C:\\Code"
+          }
+          - {
+            name: "MacOS 10.15",
+            os: macos-10.15,
+            work_dir: "$HOME"
+          }
 
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
     
     env:
       #CONAN_CPU_COUNT: 6
       CONAN_SYSREQUIRES_MODE: enabled
-      CONAN_USER_HOME: "${{ github.workspace }}/release"
-      CONAN_USER_HOME_SHORT: "${{ github.workspace }}/release/short"
+      CONAN_USER_HOME: "${{ matrix.config.work_dir }}/release"
+      CONAN_USER_HOME_SHORT: "${{ matrix.config.work_dir }}/release/short"
       INSTALL_DIR: ${{ github.workspace }}/install/
 
     steps:
@@ -27,14 +51,14 @@ jobs:
 
     # Check if GitHub Cache has it, because that's free
     - name: Using the builtin GitHub Cache Action for .conan
-      if: matrix.os != 'windows-2019'
+      if: !startsWith(matrix.config.os, 'windows')
       id: github-cache-conan
       uses: actions/cache@v1
       env:
         cache-name: cache-conan-modules
       with:
         path: ${{ env.CONAN_USER_HOME }}
-        key: host-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.os }}-${{ hashFiles('conanfile.py') }}
+        key: host-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.config.os }}-${{ hashFiles('conanfile.py') }}
 
     # If GitHub Cache doesn't have it, get from Conan Cache (has git lfs cost)
     - name: Cache Conan modules
@@ -45,8 +69,8 @@ jobs:
           bot_name: turtlebrowser-bot
           bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
           cache_name: turtlebrowser/conan-cache-turtlebrowser
-          key: host-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.os }}-${{ hashFiles('conanfile.py') }}
-          target_os: ${{ runner.os }}-${{ matrix.os }}
+          key: host-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.config.os }}-${{ hashFiles('conanfile.py') }}
+          target_os: ${{ runner.os }}-${{ matrix.config.os }}
           lfs_limit: 60
 
     - name: Install Conan
@@ -69,7 +93,7 @@ jobs:
 #        mkdir build
         
 #    - name: Fix Path on Ubuntu
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04' ||  matrix.os == 'ubuntu-16.04'
+#      if: startsWith(matrix.config.os, 'ubuntu')
 #      run: echo "/home/runner/.local/bin" >> $GITHUB_PATH
 
 #    - name: Install patched conan-qt
@@ -98,7 +122,7 @@ jobs:
       run: cmake --build . --config Release -j 4
 
     - name: Linux Install
-      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
+      if: startsWith(matrix.config.os, 'ubuntu')
       working-directory: build
       run: |
         source ${{ github.workspace }}/build/src/activate_run.sh
@@ -107,7 +131,7 @@ jobs:
         cp *.deb *.rpm ${{ env.INSTALL_DIR }}
 
     - name: Windows Install (windeployqt)
-      if: matrix.os == 'windows-2019'
+      if: startsWith(matrix.config.os, 'windows')
       working-directory: build
       run: |
         ${{ github.workspace }}/build/src/activate_run.ps1
@@ -115,7 +139,7 @@ jobs:
 
     # https://docs.conan.io/en/latest/howtos/manage_shared_libraries/env_vars.html?highlight=dyld_library_path#using-shared-libraries-from-dependencies
     - name: Mac Install (macdeployqt)
-      if: matrix.os == 'macos-10.15'
+      if: startsWith(matrix.config.os, 'macos')
       working-directory: build
       run: |
         source ${{ github.workspace }}/build/src/activate_run.sh
@@ -127,5 +151,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ matrix.os }}-artifact
+        name: ${{ matrix.config.os }}-artifact
         path: ${{ env.INSTALL_DIR }}
