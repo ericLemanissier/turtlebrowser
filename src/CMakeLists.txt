@@ -142,10 +142,10 @@ endif ()
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     install(DIRECTORY
             ${CMAKE_CURRENT_BINARY_DIR}/lib
-            ${CMAKE_CURRENT_BINARY_DIR}/plugins
-            ${CMAKE_CURRENT_BINARY_DIR}/qml
+            ${CMAKE_CURRENT_BINARY_DIR}/bin/archdatadir/plugins
+            ${CMAKE_CURRENT_BINARY_DIR}/bin/archdatadir/qml
             ${CMAKE_CURRENT_BINARY_DIR}/resources
-            ${CMAKE_CURRENT_BINARY_DIR}/translations
+            ${CMAKE_CURRENT_BINARY_DIR}/bin/datadir/translations
             DESTINATION ${CMAKE_INSTALL_BINDIR})
     install(FILES
             ${CMAKE_CURRENT_BINARY_DIR}/libexec/QtWebEngineProcess
