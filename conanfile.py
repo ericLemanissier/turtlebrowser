@@ -6,7 +6,7 @@ class ConanDependencies(ConanFile):
 
     settings = "os", "compiler", "build_type", "arch"
     platform_qt = os.getenv("CMAKE_PREFIX_PATH")
-    generators = "qt", "cmake", "cmake_find_package_multi", "cmake_find_package", "pkg_config", "qmake" if not platform_qt else "cmake"
+    generators = "qt", "virtualrunenv", "cmake", "cmake_find_package_multi", "cmake_find_package", "pkg_config", "qmake" if not platform_qt else "cmake"
     
     default_options = {
         "qt:shared": True,
