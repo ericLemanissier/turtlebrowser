@@ -25,6 +25,11 @@ Install Conan
 pip3 install conan  
 ~~~
 
+Update Conan - highly recommend getting the latest Conan
+~~~ bash
+pip3 install conan --upgrade
+~~~
+
 Install Java (probably not needed if not building chromium tests) https://www.oracle.com/java/technologies/javase-jdk15-downloads.html
 
 Install XCode (App Store)
