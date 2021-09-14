@@ -60,10 +60,10 @@ jobs:
       id: github-cache-conan
       uses: actions/cache@v1
       env:
-        cache-name: cache-conan-modules
+        cache-name: cache-conan-index-modules
       with:
         path: ${{ env.CONAN_USER_HOME }}
-        key: host-cci-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.config.os }}-${{ hashFiles('conanfile.py') }}
+        key: host-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.config.os }}-${{ hashFiles('conanfile.py') }}
 
     # If GitHub Cache doesn't have it, get from Conan Cache (has git lfs cost)
     - name: Cache Conan modules
@@ -73,9 +73,9 @@ jobs:
       with:
           bot_name: turtlebrowser-bot
           bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
-          cache_name: turtlebrowser/conan-cache-turtlebrowser
-          key: host-cci-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.config.os }}-${{ hashFiles('conanfile.py') }}
-          target_os: cci-${{ runner.os }}-${{ matrix.config.os }}
+          cache_name: turtlebrowser/conan-center-index-cache
+          key: host-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.config.os }}-${{ hashFiles('conanfile.py') }}
+          target_os: ${{ runner.os }}-${{ matrix.config.os }}
           lfs_limit: 60
 
     # MacOS 10.15 - XCode version 11.7
