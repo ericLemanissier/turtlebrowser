@@ -26,7 +26,7 @@ jobs:
 
     - name: Cache Conan modules
       id: cache-conan
-      uses: turtlebrowser/conan-cache@v1.3
+      uses: turtlebrowser/conan-cache@vmaster
       with:
           bot_name: turtlebrowser-bot
           bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
