@@ -49,7 +49,11 @@ endif ()
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Qml Quick Svg WebEngine Widgets Xml Test LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Qml Quick Svg WebEngine Widgets Xml Test LinguistTools REQUIRED)
 
-qt_add_resources(QT_RESOURCES resources/resources.qrc ${LICENSE_QRC})
+if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt6_add_resources(QT_RESOURCES resources/resources.qrc ${LICENSE_QRC})
+else()
+    qt5_add_resources(QT_RESOURCES resources/resources.qrc ${LICENSE_QRC})
+endif ()
 
 set(tsFiles
     ${PROJECT_NAME}_de_AT.ts
