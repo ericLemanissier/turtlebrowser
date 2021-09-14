@@ -40,7 +40,7 @@ jobs:
     - name: Cache Conan modules
       if: steps.github-cache-conan.outputs.cache-hit != 'true'
       id: cache-conan
-      uses: turtlebrowser/conan-cache@v1.2
+      uses: turtlebrowser/conan-cache@v1.3
       with:
           bot_name: turtlebrowser-bot
           bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
