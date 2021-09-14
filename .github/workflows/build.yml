@@ -16,19 +16,16 @@ jobs:
             name: "Ubuntu 18.04",
             os: ubuntu-18.04,
             work_dir: "/home/runner/work/work_dir",
-#            cache_dir: "/home/runner/work/work_dir"
           }
           - {
             name: "Ubuntu 20.04",
             os: ubuntu-20.04,
             work_dir: "/home/runner/work/work_dir",
-#            cache_dir: "/home/runner/work/work_dir"
           }
           - {
             name: "Windows 2019",
             os: windows-2019,
             work_dir: "/c/Code",
-#            cache_dir: "C:\\Code"
           }
           - {
             name: "MacOS 10.15",
