@@ -138,7 +138,7 @@ jobs:
       run: cmake --build . --config Release -j 4
 
     - name: Linux Install
-      if: false && startsWith(matrix.config.os, 'ubuntu')
+      if: startsWith(matrix.config.os, 'ubuntu')
       working-directory: build
       run: |
         source ${{ github.workspace }}/build/src/activate_run.sh
