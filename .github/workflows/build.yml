@@ -30,12 +30,12 @@ jobs:
           - {
             name: "MacOS 10.15",
             os: macos-10.15,
-            work_dir: "~",
+            work_dir: $HOME,
           }
           - {
             name: "MacOS 11",
             os: macos-11,
-            work_dir: "~",
+            work_dir: $HOME,
           }
 
     name: ${{ matrix.config.name }}
