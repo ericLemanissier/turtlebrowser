@@ -152,7 +152,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
             ${CMAKE_CURRENT_BINARY_DIR}/bin/datadir/translations
             DESTINATION ${CMAKE_INSTALL_BINDIR})
     install(FILES
-            ${CMAKE_CURRENT_BINARY_DIR}/libexec/QtWebEngineProcess
+            ${CMAKE_CURRENT_BINARY_DIR}/bin/archdatadir/libexec/QtWebEngineProcess
             DESTINATION ${CMAKE_INSTALL_BINDIR}/libexec
             PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ WORLD_READ WORLD_EXECUTE)
 endif ()
