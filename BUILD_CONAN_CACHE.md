@@ -39,7 +39,7 @@ mkdir /Code
 cd /Code
 export CONAN_USER_HOME="/Code/release"
 export CONAN_USER_HOME_SHORT=${CONAN_USER_HOME}/short
-git clone git@github.com:turtlebrowser/conan-cache-turtlebrowser.git $CONAN_USER_HOME
+git clone git@github.com:turtlebrowser/conan-center-index-cache.git $CONAN_USER_HOME
 sudo apt-get -y update
 sudo apt-get -y install git-lfs
 sudo apt-get -y install python

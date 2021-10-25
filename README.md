@@ -69,7 +69,7 @@ https://wiki.qt.io/Building_Qt_5_from_Git
 
 ### Using the prebuilt conan cache to avoid building Qt
 
-Clone the appropriate branch of [conan-cache-turtlebrowser](https://github.com/turtlebrowser/conan-cache-turtlebrowser) according to the instructions [here](https://github.com/turtlebrowser/conan-cache#how-to-use-locally).
+Clone the appropriate branch of [conan-cache-turtlebrowser](https://github.com/turtlebrowser/conan-center-index-cache) according to the instructions [here](https://github.com/turtlebrowser/conan-cache#how-to-use-locally).
 
 #### Windows Conan Cache build settings
 ```

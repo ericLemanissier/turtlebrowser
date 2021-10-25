@@ -13,7 +13,7 @@ The cache resides in c: because long file paths will cause issues.
 cd c:
 export CONAN_USER_HOME="c:/release"
 export CONAN_USER_HOME_SHORT=${CONAN_USER_HOME}/short
-git clone git@github.com:turtlebrowser/conan-cache-turtlebrowser.git $CONAN_USER_HOME
+git clone git@github.com:turtlebrowser/conan-center-index-cache.git $CONAN_USER_HOME
 cd ${CONAN_USER_HOME}
 git checkout host-Windows-target-Windows-windows-2019-master
 git lfs pull

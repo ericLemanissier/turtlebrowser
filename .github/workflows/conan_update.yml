@@ -30,7 +30,7 @@ jobs:
       with:
           bot_name: turtlebrowser-bot
           bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
-          cache_name: turtlebrowser/conan-cache-turtlebrowser
+          cache_name: turtlebrowser/conan-center-index-cache
           key: host-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.os }}-update-${{ github.run_number }}
           target_os: ${{ runner.os }}-${{ matrix.os }}
           lfs_limit: 60
