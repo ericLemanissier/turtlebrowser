@@ -58,8 +58,13 @@ jobs:
     - name: Conan version
       run: echo "${{ steps.conan.outputs.version }}"
 
-    - name: Configure CMake
-      run: cmake -B ${{ env.build }} -DCMAKE_BUILD_TYPE=Release
+    # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
+    # If this step fails, then you should remove it and run the build manually (see below)
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v1
+
+#    - name: Configure CMake
+#      run: cmake -B ${{ env.build }} -DCMAKE_BUILD_TYPE=Release
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 https://git.io/JvXDl
