@@ -11,9 +11,6 @@ _Online is Real_
 
 TurtleBrowser is intended to become a full featured browser on at least Linux, MacOS, Windows, iOS and Android.
 
-Once the basics are in place the goal is to create a browser that allows "installation" of Progressive Web Apps
-as "native" sandboxed apps on desktop machines.
-
 The foundation is: privacy, security, user is the customer, open source, data minimization
 
 ## Tricky bits
