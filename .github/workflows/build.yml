@@ -44,7 +44,7 @@ jobs:
     
     env:
       #CONAN_CPU_COUNT: 6
-      CONAN_VS_INSTALLATION_PREFERENCE: Community
+      #CONAN_VS_INSTALLATION_PREFERENCE: Community
       CONAN_SYSREQUIRES_MODE: enabled
       CONAN_USER_HOME: "${{ matrix.config.work_dir }}/release"
       CONAN_USER_HOME_SHORT: "${{ matrix.config.work_dir }}/release/short"
