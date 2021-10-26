@@ -24,6 +24,8 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
+    env:
+      CONAN_SYSREQUIRES_MODE: enabled
     permissions:
       actions: read
       contents: read
