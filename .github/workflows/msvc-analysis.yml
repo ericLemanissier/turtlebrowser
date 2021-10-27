@@ -20,15 +20,27 @@ on:
 env:
   # Path to the CMake build directory.
   build: '${{ github.workspace }}/build'
+  CONAN_USER_HOME: "C:\\release"
+  CONAN_USER_HOME_SHORT: "C:\\release\\short"
 
 jobs:
   analyze:
     name: Analyze
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Cache Conan modules
+        uses: turtlebrowser/conan-cache@master
+        with:
+            bot_name: turtlebrowser-bot
+            bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
+            cache_name: turtlebrowser/conan-center-index-cache
+            key: host-${{ runner.os }}-target-${{ runner.os }}-windows-2019-${{ hashFiles('conanfile.py') }}
+            target_os: ${{ runner.os }}-windows-2019
+            lfs_limit: 60
 
       - name: Install Conan
         id: conan
