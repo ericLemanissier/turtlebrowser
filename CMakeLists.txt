@@ -16,7 +16,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # mechanism for doing so (e.g. packaging TurtleBrowser for
 # a distribution) then set USE_CONAN OFF.
 option(USE_CONAN "Use Conan package manager" ON)
-option(UPDATE_CONAN "Update Conan Cache" ON)
+option(UPDATE_CONAN "Update Conan Cache" OFF)
 option(ENABLE_TS_RESCAN "Enable rescanning sources to update .ts files" OFF)
 option(CHECK_IN_LICENSES "Generate the licenses for the target platform and copy them into the source tree" OFF)
         
