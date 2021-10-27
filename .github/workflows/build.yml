@@ -105,16 +105,6 @@ jobs:
     - name: Make build directory
       run: mkdir build
 
-#    - name: Get Conan
-#      run: |
-#        pip3 install wheel setuptools
-#        pip3 install conan --upgrade
-#        mkdir build
-        
-#    - name: Fix Path on Ubuntu
-#      if: startsWith(matrix.config.os, 'ubuntu')
-#      run: echo "/home/runner/.local/bin" >> $GITHUB_PATH
-
     - name: Add Linux dependencies
       if: startsWith(matrix.config.os, 'ubuntu')
       run: sudo apt-get install libnss3-dev libdbus-1-dev
