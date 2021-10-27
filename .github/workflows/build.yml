@@ -171,8 +171,8 @@ jobs:
     - name: remove conan's installation registry
       run: conan remove --system-reqs '*'
 
-#    - name: Upload artifact
-#      uses: actions/upload-artifact@v2
-#      with:
-#        name: ${{ matrix.config.os }}-artifact
-#        path: ${{ env.INSTALL_DIR }}
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.config.os }}-artifact
+        path: ${{ env.INSTALL_DIR }}
