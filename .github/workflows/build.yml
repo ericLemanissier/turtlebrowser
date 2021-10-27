@@ -28,8 +28,8 @@ jobs:
           - {
             name: "Windows 2019",
             os: windows-2019,
-            conan_home: "C:\release",
-            conan_home_short: "C:\release\short",
+            conan_home: "C:\\release",
+            conan_home_short: "C:\\release\\short",
           }
           - {
             name: "MacOS 10.15",
