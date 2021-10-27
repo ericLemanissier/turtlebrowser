@@ -10,8 +10,9 @@ _Online is Real_
 ** NOT READY FOR USE. PRE-ALPHA **
 
 TurtleBrowser is intended to become a full featured browser on at least Linux, MacOS, Windows, iOS and Android.
+Currently it should build on Linux, MacOS and Windows.
 
-The foundation is: privacy, security, user is the customer, open source, data minimization
+The foundation will be: privacy, security, user is the customer, open source, data minimization
 
 ## Tricky bits
 
