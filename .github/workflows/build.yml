@@ -16,27 +16,32 @@ jobs:
           - {
             name: "Ubuntu 18.04",
             os: ubuntu-18.04,
-            work_dir: "/home/runner/work/work_dir",
+            conan_home: "/home/runner/work/conan/release",
+            conan_home_short: "/home/runner/work/conan/release/short",
           }
           - {
             name: "Ubuntu 20.04",
             os: ubuntu-20.04,
-            work_dir: "/home/runner/work/work_dir",
+            conan_home: "/home/runner/work/conan/release",
+            conan_home_short: "/home/runner/work/conan/release/short",
           }
           - {
             name: "Windows 2019",
             os: windows-2019,
-            work_dir: "/c/Code",
+            conan_home: "C:\release",
+            conan_home_short: "C:\release\short",
           }
           - {
             name: "MacOS 10.15",
             os: macos-10.15,
-            work_dir: "/Users/runner/work/work_dir",
+            conan_home: "/Users/runner/work/conan/release",
+            conan_home_short: "/Users/runner/work/conan/release/short",
           }
           - {
             name: "MacOS 11",
             os: macos-11,
-            work_dir: "/Users/runner/work/work_dir",
+            conan_home: "/Users/runner/work/conan/release",
+            conan_home_short: "/Users/runner/work/conan/release/short",
           }
 
     name: ${{ matrix.config.name }}
@@ -46,8 +51,8 @@ jobs:
       #CONAN_CPU_COUNT: 6
       #CONAN_VS_INSTALLATION_PREFERENCE: Community
       CONAN_SYSREQUIRES_MODE: enabled
-      CONAN_USER_HOME: "${{ matrix.config.work_dir }}/release"
-      CONAN_USER_HOME_SHORT: "${{ matrix.config.work_dir }}/release/short"
+      CONAN_USER_HOME: "${{ matrix.config.conan_home }}"
+      CONAN_USER_HOME_SHORT: "${{ matrix.config.conan_home_short }}"
       INSTALL_DIR: ${{ github.workspace }}/install/
 
     steps:
