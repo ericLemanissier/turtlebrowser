@@ -23,7 +23,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: turtlebrowser/get-conan@main
 
     - name: Cache Conan modules
       id: cache-conan
@@ -35,6 +34,9 @@ jobs:
           key: host-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.os }}-${{ hashFiles('conanfile.py') }}
           target_os: ${{ runner.os }}-${{ matrix.os }}
           lfs_limit: 60
+
+    - name: Install Conan
+      uses: turtlebrowser/get-conan@main
 
     - name: Make build directory
       run: mkdir build
