@@ -35,7 +35,7 @@ namespace turtle_browser::licenses {
       case LicenseRole::LicenseCategories:
         return m_categories;
       default:
-        return QVariant();
+        return {};
     }
   }
 
