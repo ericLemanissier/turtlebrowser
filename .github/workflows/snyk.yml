@@ -44,6 +44,6 @@ jobs:
 
     - name: Run snyk on .conan/data
       working-directory: ${{ env.CONAN_USER_HOME }}/.conan/data
-      run: snyk source test
+      run: snyk test
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
