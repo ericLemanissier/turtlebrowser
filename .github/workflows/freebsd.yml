@@ -26,5 +26,6 @@ jobs:
       with:
         envs: 'MYTOKEN CONAN_MAKE_PROGRAM CC CXX CONAN_SYSREQUIRES_MODE'
         usesh: true
+        mem: 2048 # MB - Double the default - should maybe be higher?
         prepare: pkg install -y cmake python2 python3 py37-pip py37-sqlite3 sudo gmake perl5 pkgconf libunwind bash
         run: python=python2 && pip install conan && cmake -E make_directory ${{runner.workspace}}/build && cd ${{runner.workspace}}/build && cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ && cmake --build . --config Release
