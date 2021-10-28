@@ -50,7 +50,10 @@ jobs:
       uses: turtlebrowser/get-conan@main
 
     - name: Conan version
-      run: echo "${{ steps.conan.outputs.version }}"
+      run: |
+        echo "${{ steps.conan.outputs.version }}"
+        which conan
+        conan --version
 
     - name: Make build directory
       run: mkdir build
