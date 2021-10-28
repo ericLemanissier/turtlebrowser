@@ -99,5 +99,5 @@ jobs:
     - name: Upload SARIF as an Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: sarif-file
+        name: sarif-files
         path: "/home/runner/work/turtlebrowser/results/${{ matrix.language }}.sarif"
