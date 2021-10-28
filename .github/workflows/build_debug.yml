@@ -47,14 +47,8 @@ jobs:
           target_os: ${{ runner.os }}-${{ matrix.os }}-debug
           lfs_limit: 60
 
-    - name: Get Conan
-      run: |
-        pip3 install wheel setuptools
-        pip3 install conan --upgrade
-        
-    - name: Fix Path on Ubuntu
-      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
-      run: echo "/home/runner/.local/bin" >> $GITHUB_PATH
+    - name: Install Conan
+      uses: turtlebrowser/get-conan@main
 
     - name: Remove all previous builds
       # Mac and not hit in either cache
