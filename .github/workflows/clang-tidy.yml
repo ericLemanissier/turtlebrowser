@@ -1,0 +1,43 @@
+name: "Clang Tidy"
+
+on:
+  workflow_dispatch:
+#  push:
+#    branches: [ main ]
+#  pull_request:
+#    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    env:
+      CONAN_SYSREQUIRES_MODE: enabled
+      CONAN_USER_HOME: "/home/runner/work/conan/release"
+      CONAN_USER_HOME_SHORT: "/home/runner/work/conan/release/short"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache Conan modules
+      uses: turtlebrowser/conan-cache@master
+      with:
+        bot_name: turtlebrowser-bot
+        bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
+        cache_name: turtlebrowser/conan-center-index-cache
+        key: host-${{ runner.os }}-target-${{ runner.os }}-ubuntu-20.04-${{ hashFiles('conanfile.py') }}
+        target_os: ${{ runner.os }}-ubuntu-20.04
+        lfs_limit: 60
+
+    - name: Install Conan
+      uses: turtlebrowser/get-conan@main
+
+    - name: Install clang-tidy
+      run: sudo apt-get install clang-tidy
+
+    - name: Configure CMake
+      working-directory: build
+      run: cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
+
+    - name: Run clang-tidy
+      working-directory: build
+      run: run-clang-tidy
