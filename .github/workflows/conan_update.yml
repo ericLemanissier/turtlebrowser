@@ -35,6 +35,16 @@ jobs:
           target_os: ${{ runner.os }}-${{ matrix.os }}
           lfs_limit: 60
 
+      # MacOS 10.15 - XCode version 11.7
+      # MacOS 11.1  - XCode version 12.4
+      # MacOS 11.3  - XCode version 12.5
+      # MacOS 12.0  - XCode version 13.0
+    - name: Get right SDK for MacOS 11
+      if: startsWith(matrix.config.os, 'macos-11')
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '12.5'
+
     - name: Add 20.04 dependency - Should be builtin in a future conan-qt release
       if: matrix.os == 'ubuntu-20.04'
       run: sudo apt install libxcb-dri3-dev
