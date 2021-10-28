@@ -25,7 +25,7 @@ namespace turtle_browser::licenses {
     QString getFileName(const QModelIndex & index) const;
     QList<QVariant> getCategories(const QModelIndex & index) const;
 
-    LicenseCategory m_category;
+    LicenseCategory m_category = LicenseCategory::All;
   };
 
 }
