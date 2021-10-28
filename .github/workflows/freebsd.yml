@@ -22,7 +22,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Test building TurtleBrowser in FreeBSD
       id: test
-      uses: vmactions/freebsd-vm@v0.0.9
+      uses: vmactions/freebsd-vm@v0.1.5
       with:
         envs: 'MYTOKEN CONAN_MAKE_PROGRAM CC CXX CONAN_SYSREQUIRES_MODE'
         usesh: true
