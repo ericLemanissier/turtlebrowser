@@ -23,6 +23,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: turtlebrowser/get-conan@main
 
     - name: Cache Conan modules
       id: cache-conan
@@ -35,15 +36,8 @@ jobs:
           target_os: ${{ runner.os }}-${{ matrix.os }}
           lfs_limit: 60
 
-    - name: Get Conan
-      run: |
-        pip3 install wheel setuptools
-        pip3 install conan --upgrade
-        mkdir build
-        
-    - name: Fix Path on Ubuntu
-      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
-      run: echo "/home/runner/.local/bin" >> $GITHUB_PATH
+    - name: Make build directory
+      run: mkdir build
 
     - name: Set up build for language files
       working-directory: build
