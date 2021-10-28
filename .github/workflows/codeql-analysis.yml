@@ -94,3 +94,10 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
+
+    # Upload SARIF file as an Artifact to download and view
+    - name: Upload SARIF as an Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: sarif-file
+        path: "/home/runner/work/turtlebrowser/results/${{ matrix.language }}.sarif"
