@@ -17,6 +17,7 @@ if (CHECK_IN_LICENSES)
 endif ()
 
 if (USE_CONAN)
+    message(STATUS "Using CONAN_USER_HOME : $ENV{CONAN_USER_HOME}")
     # Download automatically, you can also just copy the conan.cmake file
     if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
         message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
