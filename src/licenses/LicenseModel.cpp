@@ -24,7 +24,7 @@ namespace turtle_browser::licenses {
     }
 
     QVariant asVariant(const LicenseCategory & category) {
-      return { static_cast<int>(category) };
+      return QVariant(static_cast<int>(category));
     }
   }
 
@@ -76,25 +76,30 @@ namespace turtle_browser::licenses {
 
   QModelIndex LicenseModel::index(int row, int column, const QModelIndex & parentIndex) const {
     if (!hasIndex(row, column, parentIndex))
-      return {};
+      return QModelIndex();
 
-    LicenseItem * parentItem = !parentIndex.isValid() ? m_rootItem.get() : getItem(parentIndex);
+    LicenseItem * parentItem;
+
+    if (!parentIndex.isValid())
+      parentItem = m_rootItem.get();
+    else
+      parentItem = getItem(parentIndex);
 
     LicenseItem * childItem = parentItem->child(row);
     if (childItem)
       return createIndex(row, column, childItem);
-    return {};
+    return QModelIndex();
   }
 
   QModelIndex LicenseModel::parent(const QModelIndex & childIndex) const {
     if (!childIndex.isValid())
-      return {};
+      return QModelIndex();
 
     auto * childItem = getItem(childIndex);
     LicenseItem * parentItem = childItem->parentItem();
 
     if (parentItem == m_rootItem.get())
-      return {};
+      return QModelIndex();
 
     return createIndex(parentItem->row(), 0, parentItem);
   }
@@ -103,7 +108,12 @@ namespace turtle_browser::licenses {
     if (parentIndex.column() > 0)
       return 0;
 
-    LicenseItem * parentItem = !parentIndex.isValid() ? m_rootItem.get() : getItem(parentIndex);
+    LicenseItem * parentItem;
+
+    if (!parentIndex.isValid())
+      parentItem = m_rootItem.get();
+    else
+      parentItem = getItem(parentIndex);
 
     return parentItem->childCount();
   }
@@ -114,10 +124,10 @@ namespace turtle_browser::licenses {
 
   QVariant LicenseModel::data(const QModelIndex & index, int role) const {
     if (!index.isValid())
-      return {};
+      return QVariant();
 
     if (!isValidRole(role))
-      return {};
+      return QVariant();
 
     auto * item = getItem(index);
 

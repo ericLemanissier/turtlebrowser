@@ -13,7 +13,7 @@ namespace turtle_browser::licenses {
   LicenseItem * LicenseItem::child(int row) {
     if (row < 0 || row >= childCount())
       return nullptr;
-    return dynamic_cast<LicenseItem *>(children().at(row));
+    return static_cast<LicenseItem *>(children().at(row));
   }
 
   int LicenseItem::childCount() const {
@@ -35,7 +35,7 @@ namespace turtle_browser::licenses {
       case LicenseRole::LicenseCategories:
         return m_categories;
       default:
-        return {};
+        return QVariant();
     }
   }
 
@@ -44,7 +44,7 @@ namespace turtle_browser::licenses {
   }
 
   LicenseItem * LicenseItem::parentItem() const {
-    return dynamic_cast<LicenseItem *>(parent());
+    return static_cast<LicenseItem *>(parent());
   }
 
 }
