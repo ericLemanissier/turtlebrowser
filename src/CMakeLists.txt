@@ -113,28 +113,30 @@ get_target_property(mocExe Qt${QT_VERSION_MAJOR}::moc IMPORTED_LOCATION)
 get_filename_component(qtBinDir "${mocExe}" DIRECTORY)
 get_filename_component(qtBaseDir "${qtBinDir}" DIRECTORY)
 
-# Need to figure out how to do this on Mac
-if (MSVC OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    # Configure the qt.conf
-    set(qtConfPrefix ${qtBaseDir})
-    set(qtConfEffectiveSourcePaths ${QTBASE_SOURCE})
-    if (MSVC)
-        set(qtConfTargetSpec win32-clang-msvc)
-        set(qtConfHostSpec win32-clang-msvc)
-    elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-        set(qtConfTargetSpec linux-clang-libc++)
-        set(qtConfHostSpec linux-clang-libc++)
-    endif ()
-    configure_file(qt.conf.in qt.conf @ONLY)
+if (NOT USE_CONAN)
+    # Need to figure out how to do this on Mac
+    if (MSVC OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        # Configure the qt.conf
+        set(qtConfPrefix ${qtBaseDir})
+        set(qtConfEffectiveSourcePaths ${QTBASE_SOURCE})
+        if (MSVC)
+            set(qtConfTargetSpec win32-clang-msvc)
+            set(qtConfHostSpec win32-clang-msvc)
+        elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+            set(qtConfTargetSpec linux-clang-libc++)
+            set(qtConfHostSpec linux-clang-libc++)
+        endif ()
+        configure_file(qt.conf.in qt.conf @ONLY)
 
-    # Install the qt.conf
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qt.conf DESTINATION ${CMAKE_INSTALL_BINDIR})
+        # Install the qt.conf
+        install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qt.conf DESTINATION ${CMAKE_INSTALL_BINDIR})
 
-    # Configure the licenses install location
-    if (MSVC)
-        set(ROOT_INSTALL_DIR ${CMAKE_INSTALL_BINDIR}/..)
-    elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-        set(ROOT_INSTALL_DIR ${CMAKE_INSTALL_BINDIR})
+        # Configure the licenses install location
+        if (MSVC)
+            set(ROOT_INSTALL_DIR ${CMAKE_INSTALL_BINDIR}/..)
+        elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+            set(ROOT_INSTALL_DIR ${CMAKE_INSTALL_BINDIR})
+        endif ()
     endif ()
 endif ()
 
