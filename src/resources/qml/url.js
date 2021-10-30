@@ -1,7 +1,7 @@
 var defaultPrefix = "https://"
 
 function searchUrl(terms) {
-    return "https://www.google.com/search?q=" + encodeURI(terms);
+    return "https://duckduckgo.com/?q=" + encodeURI(terms);
 }
 
 function hasWhiteSpace(s) {

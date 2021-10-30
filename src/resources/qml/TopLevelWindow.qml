@@ -33,13 +33,13 @@ FramelessTopLevelWindow {
     ListModel {
         id: tabModel
 
-        readonly property string speedDial: "https://www.google.com"
-        readonly property string speedDialTitle: "Google"
+        readonly property string speedDial: "https://duckduckgo.com"
+        readonly property string speedDialTitle: "DuckDuckGo"
         readonly property string speedDialIcon: Icons.webIcon
 
         ListElement {
-            tabUrl: "https://www.google.com"
-            tabTitle: "Google"
+            tabUrl: "https://duckduckgo.com"
+            tabTitle: "DuckDuckGo"
             tabIcon: ""
             isPage: true
         }
