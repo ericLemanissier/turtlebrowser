@@ -77,3 +77,6 @@ jobs:
 
     - name: Build
       run: cmake --build build
+
+    - name: remove conan's installation registry
+      run: conan remove --system-reqs '*'
