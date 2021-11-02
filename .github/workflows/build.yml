@@ -14,12 +14,6 @@ jobs:
       matrix:
         config:
           - {
-            name: "Ubuntu 18.04",
-            os: ubuntu-18.04,
-            conan_home: "/home/runner/work/conan/release",
-            conan_home_short: "/home/runner/work/conan/release/short",
-          }
-          - {
             name: "Ubuntu 20.04",
             os: ubuntu-20.04,
             conan_home: "/home/runner/work/conan/release",
@@ -43,6 +37,12 @@ jobs:
             conan_home: "/Users/runner/work/conan/release",
             conan_home_short: "/Users/runner/work/conan/release/short",
           }
+#          - {
+#            name: "Ubuntu 18.04",
+#            os: ubuntu-18.04,
+#            conan_home: "/home/runner/work/conan/release",
+#            conan_home_short: "/home/runner/work/conan/release/short",
+#          }
 
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
@@ -54,13 +54,14 @@ jobs:
       CONAN_USER_HOME: "${{ matrix.config.conan_home }}"
       CONAN_USER_HOME_SHORT: "${{ matrix.config.conan_home_short }}"
       INSTALL_DIR: ${{ github.workspace }}/install/
+      PKG_CONFIG_PATH: /usr/lib/x86_64-linux-gnu/pkgconfig/
 
     steps:
     - uses: actions/checkout@v2
 
     # Check if GitHub Cache has it, because that's free
     - name: Using the builtin GitHub Cache Action for .conan
-      if: (startsWith(matrix.config.os, 'windows') == false)
+      if: false && (startsWith(matrix.config.os, 'windows') == false)
       id: github-cache-conan
       uses: actions/cache@v1
       env:
@@ -71,7 +72,7 @@ jobs:
 
     # If GitHub Cache doesn't have it, get from Conan Cache (has git lfs cost)
     - name: Cache Conan modules
-      if: steps.github-cache-conan.outputs.cache-hit != 'true'
+      if: false && steps.github-cache-conan.outputs.cache-hit != 'true'
       id: cache-conan
       uses: turtlebrowser/conan-cache@master
       with:
@@ -105,9 +106,16 @@ jobs:
     - name: Make build directory
       run: mkdir build
 
+    - name: Clean Linux Clang dependencies
+      if: startsWith(matrix.config.os, 'ubuntu')
+      run: |
+        sudo  apt list --installed "libclang*-dev"
+        sudo apt-get purge --auto-remove libclang-common-10-dev
+        sudo apt-get purge --auto-remove libclang-common-11-dev
+
     - name: Add Linux dependencies
       if: startsWith(matrix.config.os, 'ubuntu')
-      run: sudo apt-get install libnss3-dev libdbus-1-dev
+      run: sudo apt-get install libnss3-dev libdbus-1-dev libclang-12-dev libxshmfence-dev nodejs
 
 #    - name: Install patched conan-qt
 #      run: |
