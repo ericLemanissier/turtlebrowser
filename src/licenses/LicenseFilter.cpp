@@ -19,7 +19,11 @@ namespace turtle_browser::licenses {
 
     QString filename = getFileName(index);
     QString path = getFilePath(index);
+#if QT_VERSION >= 0x060000
+    return (filename.contains(filterRegularExpression()) || path.contains(filterRegularExpression()));
+#else
     return (filename.contains(filterRegExp()) || path.contains(filterRegExp()));
+#endif
   }
 
   QString LicenseFilter::readFile(const QModelIndex & index) {

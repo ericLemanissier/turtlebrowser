@@ -7,7 +7,7 @@
 
 namespace turtle_browser::licenses {
 
-  class LicenseItem : private QObject {
+  class LicenseItem : public QObject {
 
     Q_OBJECT
 
