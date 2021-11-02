@@ -11,14 +11,45 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04, ubuntu-20.04, macos-10.15, macos-11, windows-2019]
+        config:
+          - {
+            name: "Ubuntu 18.04",
+            os: ubuntu-18.04,
+            conan_home: "/home/runner/work/conan/release",
+            conan_home_short: "/home/runner/work/conan/release/short",
+          }
+          - {
+            name: "Ubuntu 20.04",
+            os: ubuntu-20.04,
+            conan_home: "/home/runner/work/conan/release",
+            conan_home_short: "/home/runner/work/conan/release/short",
+          }
+          - {
+            name: "Windows 2019",
+            os: windows-2019,
+            conan_home: "C:\\release",
+            conan_home_short: "C:\\release\\short",
+          }
+          - {
+            name: "MacOS 10.15",
+            os: macos-10.15,
+            conan_home: "/Users/runner/work/conan/release",
+            conan_home_short: "/Users/runner/work/conan/release/short",
+          }
+          - {
+            name: "MacOS 11",
+            os: macos-11,
+            conan_home: "/Users/runner/work/conan/release",
+            conan_home_short: "/Users/runner/work/conan/release/short",
+          }
 
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
     
     env:
-      CONAN_USER_HOME: "${{ github.workspace }}/release"
-      CONAN_USER_HOME_SHORT: "${{ github.workspace }}/release/short"
       CONAN_SYSREQUIRES_MODE: enabled
+      CONAN_USER_HOME: "${{ matrix.config.conan_home }}"
+      CONAN_USER_HOME_SHORT: "${{ matrix.config.conan_home_short }}"
       INSTALL_DIR: ${{ github.workspace }}/install/
 
     steps:
@@ -31,8 +62,8 @@ jobs:
           bot_name: turtlebrowser-bot
           bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
           cache_name: turtlebrowser/conan-center-index-cache
-          key: host-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.os }}-update-${{ github.run_number }}
-          target_os: ${{ runner.os }}-${{ matrix.os }}
+          key: host-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.config.os }}-update-${{ github.run_number }}
+          target_os: ${{ runner.os }}-${{ matrix.config.os }}
           lfs_limit: 60
 
       # MacOS 10.15 - XCode version 11.7
@@ -40,13 +71,13 @@ jobs:
       # MacOS 11.3  - XCode version 12.5
       # MacOS 12.0  - XCode version 13.0
     - name: Get right SDK for MacOS 11
-      if: startsWith(matrix.os, 'macos-11')
+      if: startsWith(matrix.config.os, 'macos-11')
       uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: '12.5'
 
     - name: Add 20.04 dependency - Should be builtin in a future conan-qt release
-      if: matrix.os == 'ubuntu-20.04'
+      if: matrix.config.os == 'ubuntu-20.04'
       run: sudo apt install libxcb-dri3-dev
 
     - name: Python2 version
@@ -69,41 +100,41 @@ jobs:
       run: mkdir build
 
     - name: Add Linux dependencies
-      if: startsWith(matrix.os, 'ubuntu')
+      if: startsWith(matrix.config.os, 'ubuntu')
       run: sudo apt-get install libnss3-dev libdbus-1-dev
 
 # Debian Dependencies
 # https://wiki.qt.io/Building_Qt_5_from_Git
 
 #    - name: Add Qt Source Dependencies
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
+#      if: matrix.config.os == 'ubuntu-20.04' || matrix.config.os == 'ubuntu-18.04'
 #      run: |
 #        sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
 #        sudo apt-get update
 #        sudo apt-get build-dep qt5-default
 
 #    - name: Add Libxcb Dependencies
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
+#      if: matrix.config.os == 'ubuntu-20.04' || matrix.config.os == 'ubuntu-18.04'
 #      run: |
 #        sudo apt-get install '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev
 
 #    - name: Add Qt WebEngine Dependencies
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
+#      if: matrix.config.os == 'ubuntu-20.04' || matrix.config.os == 'ubuntu-18.04'
 #      run: |
 #        sudo apt-get install libssl-dev libxcursor-dev libxcomposite-dev libxdamage-dev libxrandr-dev libdbus-1-dev libfontconfig1-dev libcap-dev libxtst-dev libpulse-dev libudev-dev libpci-dev libnss3-dev libasound2-dev libxss-dev libegl1-mesa-dev gperf bison
 
 #    - name: Add Qt Multimedia Dependencies - using GStreamer 1.0
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
+#      if: matrix.config.os == 'ubuntu-20.04' || matrix.config.os == 'ubuntu-18.04'
 #      run: |
 #        sudo apt-get install libasound2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 
 #    - name: Add QDoc Documentation Generator Tool Dependencies
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
+#      if: matrix.config.os == 'ubuntu-20.04' || matrix.config.os == 'ubuntu-18.04'
 #      run: |
 #        sudo apt install libclang-6.0-dev llvm-6.0
 
 #    - name: Remove all previous builds
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'macos-10.15' || matrix.os == 'ubuntu-16.04'
+#      if: matrix.config.os == 'ubuntu-20.04' || matrix.config.os == 'macos-10.15' || matrix.config.os == 'ubuntu-16.04'
 #      run: conan remove -f "*"
 
     - name: Get Conan Dependencies
