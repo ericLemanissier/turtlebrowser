@@ -62,7 +62,7 @@ jobs:
 
     - name: Remove all previous builds
       # Mac and not hit in either cache
-      if: (startsWith(matrix.os, 'macos') && (steps.github-cache-conan.outputs.cache-hit != 'true') && (steps.cache-conan.outputs.cache-hit != 1)
+      if: (startsWith(matrix.os, 'macos')) && (steps.github-cache-conan.outputs.cache-hit != 'true') && (steps.cache-conan.outputs.cache-hit != 1)
       run: conan remove -f "*"
 
 #    - name: Install patched conan-qt
