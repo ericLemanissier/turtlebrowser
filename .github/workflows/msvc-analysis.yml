@@ -20,6 +20,7 @@ on:
 env:
   # Path to the CMake build directory.
   build: '${{ github.workspace }}/build'
+  cmake_build_type: Release
   CONAN_USER_HOME: "C:\\release"
   CONAN_USER_HOME_SHORT: "C:\\release\\short"
   INSTALL_DIR: ${{ github.workspace }}/install/
@@ -51,13 +52,13 @@ jobs:
         run: echo "${{ steps.conan.outputs.version }}"
 
       - name: Get Conan Dependencies
-        run: cmake -B ${{ env.build }} -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release
+        run: cmake -B ${{ env.build }} -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=${{ env.cmake_build_type }}
 
       - name: Build
-        run: cmake --build ${{ env.build }} --config Release -j 4
+        run: cmake --build ${{ env.build }} --config ${{ env.cmake_build_type }} -j 4
 
 #      - name: Configure CMake
-#        run: cmake -B ${{ env.build }} -DCMAKE_BUILD_TYPE=Release
+#        run: cmake -B ${{ env.build }} -DCMAKE_BUILD_TYPE=${{ env.cmake_build_type }}
 #
 #      # Build is not required unless generated source files are used
 #      - name: Build CMake
@@ -69,6 +70,7 @@ jobs:
         id: run-analysis
         with:
           cmakeBuildDirectory: ${{ env.build }}
+          buildConfiguration: ${{ env.cmake_build_type }}
           # Ruleset file that will determine what checks will be run
           ruleset: NativeRecommendedRules.ruleset
 
