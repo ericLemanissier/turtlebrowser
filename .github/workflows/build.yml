@@ -37,12 +37,12 @@ jobs:
             conan_home: "/Users/runner/work/conan/release",
             conan_home_short: "/Users/runner/work/conan/release/short",
           }
-#          - {
-#            name: "Ubuntu 18.04",
-#            os: ubuntu-18.04,
-#            conan_home: "/home/runner/work/conan/release",
-#            conan_home_short: "/home/runner/work/conan/release/short",
-#          }
+          - {
+            name: "Ubuntu 18.04",
+            os: ubuntu-18.04,
+            conan_home: "/home/runner/work/conan/release",
+            conan_home_short: "/home/runner/work/conan/release/short",
+          }
 
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
@@ -106,16 +106,24 @@ jobs:
     - name: Make build directory
       run: mkdir build
 
-    - name: Clean Linux Clang dependencies
-      if: startsWith(matrix.config.os, 'ubuntu')
+    - name: Ubuntu 20.04 - Clean Linux Clang dependencies
+      if: startsWith(matrix.config.os, 'ubuntu-20.04')
       run: |
-        sudo  apt list --installed "libclang*-dev"
+        sudo apt list --installed "libclang*-dev"
         sudo apt-get purge --auto-remove libclang-common-10-dev
         sudo apt-get purge --auto-remove libclang-common-11-dev
+        sudo apt-get install libclang-12-dev
 
-    - name: Add Linux dependencies
+    - name: Ubuntu - Add Linux dependencies
       if: startsWith(matrix.config.os, 'ubuntu')
-      run: sudo apt-get install libnss3-dev libdbus-1-dev libclang-12-dev libxshmfence-dev nodejs
+      run: sudo apt-get install libnss3-dev libdbus-1-dev libxshmfence-dev nodejs
+
+    - name: Ubuntu 18.04 - Upgrade compiler
+      if: startsWith(matrix.config.os, 'ubuntu-18.04')
+      run: |
+        sudo apt install gcc-8 g++-8
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 20
+        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 20
 
 #    - name: Install patched conan-qt
 #      run: |
