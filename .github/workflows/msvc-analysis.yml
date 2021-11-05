@@ -52,7 +52,7 @@ jobs:
         run: echo "${{ steps.conan.outputs.version }}"
 
       - name: Get Conan Dependencies
-        run: cmake -B ${{ env.build }} -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=${{ env.cmake_build_type }}
+        run: cmake -B ${{ env.build }} -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=${{ env.cmake_build_type }} -DCMAKE_VS_PLATFORM_TOOLSET_HOST_ARCHITECTURE="x64"
 
       - name: Build
         run: cmake --build ${{ env.build }} --config ${{ env.cmake_build_type }} -j 4
