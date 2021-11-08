@@ -114,6 +114,14 @@ jobs:
         sudo apt-get purge --auto-remove libclang-common-11-dev
         sudo apt-get install libclang-12-dev
 
+    - name: Ubuntu 18.04 - Clean Linux Clang dependencies
+      if: startsWith(matrix.config.os, 'ubuntu-18.04')
+      run: |
+        sudo apt list --installed "libclang*-dev"
+        sudo apt-get purge --auto-remove libclang-common-7-dev
+        sudo apt-get purge --auto-remove libclang-common-8-dev
+        sudo apt-get install libclang-9-dev
+
     - name: Ubuntu - Add Linux dependencies
       if: startsWith(matrix.config.os, 'ubuntu')
       run: sudo apt-get install libnss3-dev libdbus-1-dev libxshmfence-dev nodejs
