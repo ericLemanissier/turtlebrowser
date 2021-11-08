@@ -26,6 +26,7 @@ class ConanDependencies(ConanFile):
         #"harfbuzz:with_glib": False,
         "qt:qtshadertools":  True,
         "qt:qtwebsockets": True,
+        "qt:with_dbus": True,
     }
 
     def requirements(self):
