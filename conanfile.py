@@ -35,7 +35,7 @@ class ConanDependencies(ConanFile):
             self.output.info("CMAKE_PREFIX_PATH not set")
             self.output.info("To use the Qt from your system, set the CMAKE_PREFIX_PATH env var")
             self.output.info("Trying to get Qt from Conan")
-            self.requires("qt/6.2.1")
+            self.requires("qt/6.2.1@ericLemanissier/conan-center-index")
         else:
             self.output.info("Getting Qt from the system. CMAKE_PREFIX_PATH = " + platform_qt)
 

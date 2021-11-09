@@ -28,6 +28,10 @@ if (USE_CONAN)
     include(${CMAKE_BINARY_DIR}/conan.cmake)
     #conan_add_remote(NAME bincrafters INDEX 1 URL https://api.bintray.com/conan/bincrafters/public-conan)
     #conan_add_remote(NAME jfrog INDEX 1 URL https://turtlebrowser.jfrog.io/artifactory/api/conan/conan)
+    conan_add_remote(NAME barbarian-github
+                 INDEX 1
+                 URL https://barbarian.bfgroup.xyz/github
+                 VERIFY_SSL True)
 
     conan_cmake_autodetect(settings)
 
