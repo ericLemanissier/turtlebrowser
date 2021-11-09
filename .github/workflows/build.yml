@@ -124,7 +124,7 @@ jobs:
 
     - name: Ubuntu - Add Linux dependencies
       if: startsWith(matrix.config.os, 'ubuntu')
-      run: sudo apt-get install libnss3-dev libdbus-1-dev libxshmfence-dev nodejs
+      run: sudo apt-get install libnss3-dev libdbus-1-dev
 
     - name: Ubuntu 18.04 - Upgrade compiler
       if: startsWith(matrix.config.os, 'ubuntu-18.04')
