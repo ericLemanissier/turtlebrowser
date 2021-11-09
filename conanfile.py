@@ -50,3 +50,4 @@ class ConanDependencies(ConanFile):
         self.copy('*', dst='bin/datadir/translations', src='bin/datadir/translations')
         self.copy('*', dst='resources', src='resources')
         self.copy("license*", dst="licenses", folder=True, ignore_case=True)
+
