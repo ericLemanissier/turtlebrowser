@@ -10,7 +10,6 @@ class ConanDependencies(ConanFile):
     
     default_options = {
         "qt:shared": True,
-        "qt:qtlocation": True,
 #        "qt:qtquickcontrols": True,
 #        "qt:qtquickcontrols2": True,
         "qt:qttools": True,
