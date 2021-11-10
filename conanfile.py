@@ -26,7 +26,6 @@ class ConanDependencies(ConanFile):
         #"harfbuzz:with_glib": False,
         "qt:qtshadertools":  True,
         "qt:qtwebsockets": True,
-        "qt:with_dbus": True,
     }
 
     def requirements(self):
@@ -50,4 +49,3 @@ class ConanDependencies(ConanFile):
         self.copy('*', dst='bin/datadir/translations', src='bin/datadir/translations')
         self.copy('*', dst='resources', src='resources')
         self.copy("license*", dst="licenses", folder=True, ignore_case=True)
-
