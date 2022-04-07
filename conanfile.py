@@ -25,6 +25,10 @@ class ConanDependencies(ConanFile):
         "fontconfig:shared": True,
         #"harfbuzz:with_glib": False,
     }
+    
+    def configure(self):
+        if self.settings.os == "Linux":
+            self.options["qt"].with_dbus = True
 
     def requirements(self):
         platform_qt = os.getenv("CMAKE_PREFIX_PATH")
